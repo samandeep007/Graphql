@@ -3,7 +3,10 @@ import { ApolloServer } from "@apollo/server";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { expressMiddleware } from "@apollo/server/express4";
-import axios from "axios";
+// import axios from "axios";
+import { Users } from "./data/users.js";
+import {Todos} from './data/todos.js';
+
 
 // Define the GraphQL schema
 const typeDefs = `
@@ -33,31 +36,37 @@ const typeDefs = `
 // Define the resolvers
 const resolvers = {
   Todo: {
-    user: async (todo) => {
-      const user = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${todo.id}`
-      );
-      return user.data;
-    },
+    user: (todo) => Users.find(e => e.id === todo.id)
+    // async (todo) => {
+    //   const user = await axios.get(
+    //     `https://jsonplaceholder.typicode.com/users/${todo.id}`
+    //   );
+    //   return user.data;
+    // },
   },
   Query: {
-    getTodos: async () => {
-      const todos = await axios.get(
-        "https://jsonplaceholder.typicode.com/todos"
-      );
-      return todos.data;
+    getTodos:  () => {
+      // const todos = await axios.get(
+      //   "https://jsonplaceholder.typicode.com/todos"
+      // );
+      // return todos.data;
+
+      return Todos
     },
-    getAllUsers: async () => {
-      const users = await axios.get(
-        "https://jsonplaceholder.typicode.com/users"
-      );
-      return users.data;
+    getAllUsers: () => {
+      // const users = await axios.get(
+      //   "https://jsonplaceholder.typicode.com/users"
+      // );
+      // return users.data;
+
+      return Users;
     },
-    getUser: async (parent, { id }) => {
-      const user = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${id}`
-      );
-      return user.data;
+    getUser: (parent, { id }) => {
+      // const user = await axios.get(
+      //   `https://jsonplaceholder.typicode.com/users/${id}`
+      // );
+      // return user.data;
+      return Users.find((e) => e.id === id)
     },
   },
 };
