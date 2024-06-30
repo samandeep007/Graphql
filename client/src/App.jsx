@@ -13,8 +13,6 @@ name
 }}
 `;
 
-
-
 function App() {
   const {data, loading} =  useQuery(query);
 
@@ -23,7 +21,7 @@ function App() {
     <>
       <div className="grid grid-flow-col gap-6 grid-cols-4 ">
       
-        {  data.getTodos.map((element) => {
+        {  data?.getTodos.map((element) => {
             <Card key={element.id} title={element.title} username={element?.user?.name}/>
           })
         }
